@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<style>
+
+/* ── FONTS ───────────────────────────────────────────────────
+   Puppeteer loads Google Fonts ONLY if waitUntil:'networkidle0'
+   is set. These are safe fallbacks if fonts fail to load.
+───────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+/* ── PAGE SETUP ─────────────────────────────────────────────
+   margin:0 so Puppeteer doesn't add its own white space.
+   All spacing is handled by body padding.
+───────────────────────────────────────────────────────────── */
+@page {
+  margin: 0;
+  size: A4;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ── BASE ────────────────────────────────────────────────── */
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  font-family: 'Source Sans 3', 'Calibri', 'Arial', sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.45;
+  color: #1a1a1a;
+  background: #ffffff;
+  width: 210mm;
+  min-height: {{PAGE_HEIGHT}};
+  padding: 14mm 17mm 14mm 17mm;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAME ────────────────────────────────────────────────── */
+.resume-name {
+  font-family: 'EB Garamond', 'Georgia', 'Times New Roman', serif;
+  font-size: 26pt;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: #0d0d0d;
+  line-height: 1.1;
+  margin-bottom: 8pt;
+  /* Do NOT use text-transform:uppercase — preserves mixed case names */
+}
+
+/* ── CONTACT LINE ────────────────────────────────────────── */
+.contact-line {
+  text-align: center;
+  font-size: 9pt;
+  color: #333;
+  margin-bottom: 14pt;
+  line-height: 1.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.contact-line a {
+  color: #1a3a6b;
+  text-decoration: none;
+}
+
+.sep {
+  color: #aaa;
+  margin: 0 6pt;
+  font-size: 8pt;
+}
+
+/* ── DIVIDER BELOW HEADER ────────────────────────────────── */
+.header-divider {
+  border: none;
+  border-top: 1.5pt solid #1a1a1a;
+  margin-bottom: 0;
+}
+
+/* ── SECTION HEADERS ─────────────────────────────────────── */
+.section-header {
+  font-family: 'Source Sans 3', 'Calibri', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.6px;
+  color: #0d0d0d;
+  border-bottom: 1pt solid #1a1a1a;
+  padding-bottom: 2.5pt;
+  margin-top: 13pt;
+  margin-bottom: 7pt;
+}
+
+/* ── SUMMARY ─────────────────────────────────────────────── */
+.summary-text {
+  font-size: 10pt;
+  color: #2a2a2a;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* ── ENTRY (experience, education, awards) ───────────────── */
+.entry {
+  margin-bottom: 9pt;
+}
+
+.entry:last-child {
+  margin-bottom: 0;
+}
+
+.entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5pt;
+}
+
+.entry-left {
+  flex: 1;
+  min-width: 0;
+  padding-right: 10pt;
+}
+
+.entry-title {
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: #0d0d0d;
+  line-height: 1.3;
+}
+
+.entry-title a {
+  color: #1a3a6b;
+  text-decoration: none;
+}
+
+.entry-sub {
+  font-size: 9.8pt;
+  color: #3a3a3a;
+  font-style: italic;
+  line-height: 1.3;
+  margin-top: 1pt;
+}
+
+.emp-type {
+  font-style: normal;
+  font-size: 9pt;
+  color: #666;
+}
+
+.entry-achievement {
+  font-size: 9pt;
+  color: #444;
+  font-style: italic;
+  margin-top: 2pt;
+}
+
+.entry-right {
+  font-size: 9.5pt;
+  color: #3a3a3a;
+  white-space: nowrap;
+  font-style: italic;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+/* ── BULLETS ─────────────────────────────────────────────── */
+.bullets {
+  list-style: none;
+  padding-left: 13pt;
+  margin-top: 4pt;
+}
+
+.bullets li {
+  font-size: 9.8pt;
+  color: #1e1e1e;
+  line-height: 1.5;
+  margin-bottom: 2.5pt;
+  position: relative;
+  padding-left: 10pt;
+}
+
+.bullets li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #2a2a2a;
+  font-size: 9pt;
+  line-height: 1.5;
+}
+
+/* ── PROJECT TECH STACK ──────────────────────────────────── */
+.tech-stack {
+  font-weight: 400;
+  font-style: italic;
+  color: #4a4a4a;
+  font-size: 9.5pt;
+}
+
+/* ── SKILLS ──────────────────────────────────────────────── */
+.skill-row {
+  font-size: 9.8pt;
+  margin-bottom: 3.5pt;
+  line-height: 1.5;
+  display: flex;
+  align-items: baseline;
+}
+
+.skill-cat {
+  font-weight: 700;
+  color: #0d0d0d;
+  white-space: nowrap;
+  min-width: 88pt;
+  flex-shrink: 0;
+}
+
+.skill-vals {
+  color: #2a2a2a;
+  flex: 1;
+}
+
+/* ── CERTIFICATIONS ──────────────────────────────────────── */
+.cert-list {
+  list-style: none;
+  padding-left: 13pt;
+}
+
+.cert-list li {
+  font-size: 9.8pt;
+  color: #1e1e1e;
+  line-height: 1.5;
+  margin-bottom: 2.5pt;
+  position: relative;
+  padding-left: 10pt;
+}
+
+.cert-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #2a2a2a;
+}
+
+/* ── PUBLICATIONS ────────────────────────────────────────── */
+.pub-list {
+  list-style: none;
+  padding-left: 13pt;
+}
+
+.pub-list li {
+  font-size: 9.5pt;
+  color: #1e1e1e;
+  line-height: 1.55;
+  margin-bottom: 3.5pt;
+  position: relative;
+  padding-left: 10pt;
+}
+
+.pub-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #1a3a6b;
+  font-size: 7.5pt;
+  top: 2pt;
+}
+
+.pub-list a { color: #1a3a6b; }
+.pub-list em { font-style: italic; color: #555; }
+
+/* ── AWARDS ──────────────────────────────────────────────── */
+.award-entry {
+  margin-bottom: 6pt;
+}
+
+.award-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.award-title {
+  font-size: 10pt;
+  font-weight: 600;
+  color: #0d0d0d;
+  flex: 1;
+  padding-right: 10pt;
+}
+
+.award-meta {
+  font-size: 9pt;
+  color: #555;
+  font-style: italic;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.award-desc {
+  font-size: 9.5pt;
+  color: #333;
+  margin-top: 1.5pt;
+  line-height: 1.45;
+}
+
+/* ── VOLUNTEER ───────────────────────────────────────────── */
+.vol-entry {
+  margin-bottom: 7pt;
+}
+
+/* ── LANGUAGES ───────────────────────────────────────────── */
+.lang-text {
+  font-size: 9.8pt;
+  color: #2a2a2a;
+  line-height: 1.5;
+}
+
+/* ── OPEN SOURCE ─────────────────────────────────────────── */
+.os-list {
+  list-style: none;
+  padding-left: 13pt;
+}
+
+.os-list li {
+  font-size: 9.5pt;
+  color: #1e1e1e;
+  line-height: 1.5;
+  margin-bottom: 2.5pt;
+  position: relative;
+  padding-left: 10pt;
+}
+
+.os-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #1a3a6b;
+  font-size: 7.5pt;
+  top: 2pt;
+}
+
+.os-list a { color: #1a3a6b; }
+
+/* ── LINKS ───────────────────────────────────────────────── */
+a {
+  color: #1a3a6b;
+  text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── NAME ── -->
+<h1 class="resume-name">{{NAME}}</h1>
+
+<!-- ── CONTACT ── -->
+<div class="contact-line">{{CONTACT}}</div>
+
+<!-- ── DIVIDER ── -->
+<hr class="header-divider"/>
+
+<!-- ── SUMMARY (always shown) ── -->
+<div class="section-header">Summary</div>
+<div class="summary-text">{{SUMMARY}}</div>
+
+<!-- ── EXPERIENCE (always shown) ── -->
+<div class="section-header">Experience</div>
+{{EXPERIENCE}}
+
+<!-- ── PROJECTS (always shown) ── -->
+<div class="section-header">Projects</div>
+{{PROJECTS}}
+
+<!-- ── SKILLS (always shown) ── -->
+<div class="section-header">Technical Skills</div>
+{{SKILLS}}
+
+<!-- ── EDUCATION (always shown) ── -->
+<div class="section-header">Education</div>
+{{EDUCATION}}
+
+<!-- ── CERTIFICATIONS (conditional — injected by html-templates.js) ── -->
+{{CERTS_SECTION}}
+
+<!-- ── PUBLICATIONS (conditional) ── -->
+{{PUBLICATIONS_SECTION}}
+
+<!-- ── AWARDS (conditional) ── -->
+{{AWARDS_SECTION}}
+
+<!-- ── VOLUNTEER (conditional) ── -->
+{{VOLUNTEER_SECTION}}
+
+<!-- ── OPEN SOURCE (conditional) ── -->
+{{OPEN_SOURCE_SECTION}}
+
+<!-- ── LANGUAGES (conditional) ── -->
+{{LANGUAGES_SECTION}}
+
+</body>
+</html>

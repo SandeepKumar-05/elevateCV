@@ -1,0 +1,138 @@
+/* ─────────────────────────────────────────────────────────
+   FOOTER — Fully responsive
+───────────────────────────────────────────────────────── */
+.footer {
+  border-top: none;
+  background-color: var(--bg);
+  padding: clamp(36px, 5vw, 60px) clamp(20px, 4vw, 48px) clamp(20px, 3vw, 32px);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-brand .footer-logo {
+  font-size: clamp(24px, 3.5vw, 32px);
+  margin-bottom: 0.5rem;
+  display: inline-flex;
+  align-items: baseline;
+  text-decoration: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.footer-brand p {
+  font-size: clamp(9px, 1vw, 10px);
+  color: var(--gray3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.footer-links {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 4rem);
+  flex-wrap: wrap;
+}
+
+.link-group h4 {
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  opacity: 0.6;
+  text-transform: uppercase;
+}
+
+.footer-link {
+  display: block;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: clamp(10px, 1.2vw, 12px);
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  transition: transform 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.footer-link:hover {
+  color: var(--accent-red);
+  transform: translateX(5px);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-top: 1px solid var(--surface);
+  padding-top: 1.5rem;
+  font-size: clamp(8px, 1vw, 9px);
+  letter-spacing: 1px;
+  color: var(--gray3);
+  text-transform: uppercase;
+}
+
+.footer-legal {
+  display: flex;
+  gap: clamp(1rem, 2vw, 2rem);
+  flex-wrap: wrap;
+}
+
+.footer-legal span {
+  cursor: crosshair;
+}
+
+.footer-legal span:hover {
+  color: var(--text-main);
+}
+
+/* ═══════════════════════════════
+   TABLET (≤ 768px)
+═══════════════════════════════ */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 20px 24px;
+  }
+  .footer-top {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .footer-links {
+    gap: 2rem;
+  }
+}
+
+/* ═══════════════════════════════
+   MOBILE (≤ 480px)
+═══════════════════════════════ */
+@media (max-width: 480px) {
+  .footer {
+    padding: 24px 16px 16px;
+  }
+  .footer-top {
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .footer-legal {
+    gap: 0.75rem;
+  }
+}

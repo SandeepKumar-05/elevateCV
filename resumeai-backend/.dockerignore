@@ -1,0 +1,35 @@
+# ── Node / npm ──────────────────────────────────────────────
+node_modules/
+npm-debug.log
+
+# ── Environment Variables ────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Build Artifacts ──────────────────────────────────────────
+dist/
+
+# ── Git ──────────────────────────────────────────────────────
+.git/
+
+# ── Docker meta (no need to copy into image) ─────────────────
+Dockerfile
+.dockerignore
+
+# ── Test & Debug Junk Files ───────────────────────────────────
+*.log
+*.txt
+debug.log
+final_test*.log
+server.log
+server_log.txt
+server_startup_err*.txt
+test_log.txt
+test_out*.txt
+test_output.txt
+test-pipeline.js
+
+# ── IDE ──────────────────────────────────────────────────────
+.vscode/
+.idea/

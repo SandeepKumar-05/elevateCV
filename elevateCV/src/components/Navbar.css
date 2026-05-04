@@ -1,0 +1,277 @@
+/* ─────────────────────────────────────────────────────────
+   NAVBAR — Complete rebuild, stable on all screens
+───────────────────────────────────────────────────────── */
+
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  height: 64px;
+  background-color: var(--bg);
+  border-bottom: none;
+  /* Sits above the body::before grain overlay (z-index: 9999) */
+  box-shadow: 0 2px 0 0 var(--border-color) !important;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
+  width: 100%;
+  box-sizing: border-box;
+  isolation: isolate;
+}
+
+/* ── Columns ── */
+.nav-left {
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  flex-shrink: 0;
+  border-right: 2px solid var(--border-color); /* Matches hero border */
+}
+
+.nav-rhs {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  min-width: 0; /* prevent grid overflow */
+}
+
+.nav-center {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start; /* 'HOME' button is immediately on the left */
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 0 32px;
+  flex-shrink: 0;
+}
+
+/* ── Logo ── */
+.nav-logo {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+  white-space: nowrap;
+}
+.logo-lower {
+  color: var(--text-main);
+  text-transform: none;
+}
+.logo-cv {
+  color: var(--accent-red);
+}
+
+/* ── Nav Tabs ── */
+.nav-tabs {
+  display: flex;
+  align-items: stretch;
+  list-style: none;
+  height: 100%;
+  border-right: 2px solid var(--border-color);
+}
+.nav-tab {
+  height: 100%;
+  border-right: 1px solid var(--gray2);
+}
+.nav-tab:last-child {
+  border-right: none;
+}
+.tab-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gray3);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s, background 0.2s;
+}
+.tab-link:hover { color: var(--text-main); }
+.tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--text-main);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+.tab-link:hover .tab-bar { transform: scaleX(1); }
+.tab-link.active {
+  background: var(--text-main);
+  color: var(--bg);
+}
+.tab-link.active .tab-bar { display: none; }
+
+/* ── Theme Circle ── */
+.theme-circle-btn {
+  width: 25px;
+  height: 25px;
+  border-radius: 50% !important;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  background: #ffffff;
+  color: #000000;
+}
+.theme-circle-btn.dark {
+  background: #000000;
+  color: #ffffff;
+}
+.theme-circle-btn:hover { transform: scale(1.1); }
+
+/* ── Auth Buttons ── */
+.auth-btns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.auth-action-btn {
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+}
+
+/* ── Hamburger (hidden on desktop) ── */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  padding: 8px;
+
+  margin-right: 16px;
+}
+.ham-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text-main);
+  position: relative;
+  transition: all 0.3s;
+}
+.ham-bar::before,
+.ham-bar::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: var(--text-main);
+  left: 0;
+  transition: all 0.3s;
+}
+.ham-bar::before { top: -7px; }
+.ham-bar::after  { top:  7px; }
+.ham-bar.open               { background: transparent; }
+.ham-bar.open::before       { transform: rotate(45deg);  top: 0; }
+.ham-bar.open::after        { transform: rotate(-45deg); top: 0; }
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE  ≤ 900px
+───────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .navbar {
+    display: flex;
+  }
+  .nav-left {
+    border-right: none;
+  }
+  .nav-rhs {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .nav-hamburger {
+    display: block;
+  }
+
+  /* Nav-center becomes a full-width slide-down menu */
+  .nav-center {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: var(--bg);
+    border-bottom: 0px solid var(--border-color);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    transition: height 0.3s ease, border-bottom 0.3s ease;
+    z-index: 999;
+  }
+  .nav-center.mobile-open {
+    height: 280px;
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .nav-tabs {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+    border: none;
+  }
+  .nav-tab {
+    width: 100%;
+    height: 56px;
+    border-right: none;
+    border-bottom: 1px solid var(--gray2);
+  }
+  .tab-link {
+    padding: 0 24px;
+    font-size: 11px;
+  }
+
+  /* Remove the border-left/right that frame the desktop tabs */
+  .nav-tabs { border-right: none; }
+
+  /* Collapse to: [Logo | auth+theme | hamburger] */
+  .nav-left  { padding: 0 16px; }
+  .nav-right { padding: 0 4px 0 0; gap: 10px; width: auto; flex-shrink: 0; }
+}
+
+@media (max-width: 480px) {
+  .nav-logo { font-size: 20px; }
+  .nav-left { padding: 0 12px; }
+  .nav-right { padding: 0 4px 0 0; gap: 6px; }
+  
+  /* Shrink right-side buttons */
+  .auth-action-btn { font-size: 9px; padding: 6px 10px; }
+  .theme-circle-btn { width: 24px; height: 24px; font-size: 12px; }
+  
+  /* Shrink hamburger */
+  .nav-hamburger { padding: 6px; margin-right: 8px; }
+  .ham-bar, .ham-bar::before, .ham-bar::after { width: 18px; }
+}
+
+@media (max-width: 380px) {
+  .nav-logo { font-size: 18px; letter-spacing: -0.5px; }
+  .nav-left { padding: 0 8px; }
+  .nav-right { gap: 4px; }
+  
+  .auth-action-btn { font-size: 8px; padding: 5px 8px; }
+  .theme-circle-btn { width: 22px; height: 22px; font-size: 11px; }
+  
+  .nav-hamburger { padding: 4px; margin-right: 4px; }
+  .ham-bar, .ham-bar::before, .ham-bar::after { width: 16px; }
+}

@@ -1,0 +1,76 @@
+# ============================================================
+# ElevateCV — Root .gitignore
+# ============================================================
+
+# ── Node ────────────────────────────────────────────────────
+node_modules/
+**/node_modules/
+
+# ── Environment / Secrets ───────────────────────────────────
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# Keep .env.example files (they hold placeholder values only)
+!.env.example
+!**/.env.example
+
+# ── Build Artifacts ─────────────────────────────────────────
+dist/
+**/dist/
+build/
+**/build/
+dist-ssr/
+
+# ── Logs ────────────────────────────────────────────────────
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── Test & Debug Output Files (backend) ─────────────────────
+resumeai-backend/debug.log
+resumeai-backend/final_test*.log
+resumeai-backend/final_test*.txt
+resumeai-backend/server.log
+resumeai-backend/server_log.txt
+resumeai-backend/server_startup_err*.txt
+resumeai-backend/test_log.txt
+resumeai-backend/test_out*.txt
+resumeai-backend/test_output.txt
+
+# ── OS Files ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor / IDE ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── Compiled Binaries ────────────────────────────────────────
+*.exe
+*.o
+*.so
+*.com
+
+# ── Vite ─────────────────────────────────────────────────────
+.vite/
+
+# ── Project-specific legacy files ────────────────────────────
+.brutalist.html
+.brutalist.css
+.brutalist.js
+gen_resumeai.py
+resumeai.html

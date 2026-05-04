@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ModernCV Resume Template</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Lato:wght@300;400;700&display=swap');
+
+        @page {
+            margin: 0;
+            size: A4;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            min-height: {{PAGE_HEIGHT}};
+            box-sizing: border-box;
+            background: white;
+            color: #333;
+            font-size: 10pt;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #1a2332;
+            color: white;
+            padding: 30pt 40pt;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 28pt;
+            margin: 0;
+            letter-spacing: 2pt;
+            text-transform: uppercase;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 9pt;
+            line-height: 1.5;
+        }
+
+        .header-right a {
+            color: #8da9ff;
+            text-decoration: none;
+        }
+
+        .sep {
+            margin: 0 4pt;
+            color: #444;
+        }
+
+        .main-container {
+            display: flex;
+            flex-grow: 1;
+        }
+
+        .sidebar {
+            width: 68mm;
+            background-color: #f4f6f8;
+            padding: 20pt;
+            box-sizing: border-box;
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20pt 30pt;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 14pt;
+            color: #1a2332;
+            text-transform: uppercase;
+            border-bottom: 2px solid #1a2332;
+            margin-top: 15pt;
+            margin-bottom: 10pt;
+            padding-bottom: 3pt;
+        }
+
+        .summary-text {
+            margin-bottom: 15pt;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        .entry {
+            margin-bottom: 12pt;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3pt;
+        }
+
+        .entry-title {
+            font-weight: 700;
+            font-size: 11pt;
+            color: #1a2332;
+        }
+
+        .entry-sub {
+            font-weight: 400;
+            color: #666;
+        }
+
+        .entry-right {
+            font-weight: 700;
+            color: #1a2332;
+            font-size: 9pt;
+        }
+
+        .bullets {
+            margin: 5pt 0 0 12pt;
+            padding: 0;
+        }
+
+        .bullets li {
+            margin-bottom: 3pt;
+        }
+
+        .skill-row {
+            margin-bottom: 8pt;
+        }
+
+        .skill-cat {
+            display: block;
+            font-weight: 700;
+            font-size: 9pt;
+            color: #1a2332;
+            margin-bottom: 2pt;
+        }
+
+        .skill-vals {
+            font-size: 9pt;
+            color: #555;
+        }
+
+        .tech-stack {
+            color: #1a2332;
+            font-weight: 600;
+            font-size: 8.5pt;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>{{NAME}}</h1>
+        </div>
+        <div class="header-right">
+            {{CONTACT}}
+        </div>
+    </header>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <h2>Skills</h2>
+            {{SKILLS}}
+
+            <h2>Education</h2>
+            {{EDUCATION}}
+
+            <h2>Certifications</h2>
+            {{CERTS}}
+        </aside>
+
+        <main class="content">
+            <h2>Profile</h2>
+            <div class="summary-text">{{SUMMARY}}</div>
+
+            <h2>Experience</h2>
+            {{EXPERIENCE}}
+
+            <h2>Projects</h2>
+            {{PROJECTS}}
+        </main>
+    </div>
+</body>
+</html>
